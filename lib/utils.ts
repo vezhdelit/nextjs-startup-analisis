@@ -5,6 +5,29 @@ export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
 }
 
+export const calculateValuation = (
+  G: number[],
+  A: number[],
+  B: number[],
+  T: number[],
+  U: number[],
+  P: number[]
+) => {
+  const fG = membershipFunc(G, A, B);
+  const fT = membershipFunc(T, A, B);
+  const Uj = defineTerms(fG, fT);
+  const uUj = termU(fG, fT, Uj);
+  const uO = maxAB(Uj, uUj, U);
+
+  return {
+    fG: fG,
+    fT: fT,
+    Uj: Uj,
+    uUj: uUj,
+    uO: uO,
+  };
+};
+
 export const membershipFunc = (G: number[], A: number[], B: number[]) => {
   return G.map((gi, index) => {
     const a = A[index];

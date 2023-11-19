@@ -6,7 +6,7 @@ import UTable from "@/components/UTable";
 import ValuationTable from "@/components/ValuationTable";
 import { Button } from "@/components/ui/button";
 
-import { defineTerms, maxAB, membershipFunc, termU } from "@/lib/utils";
+import { calculateValuation } from "@/lib/utils";
 import { useEffect, useState } from "react";
 
 const Home = () => {
@@ -20,47 +20,51 @@ const Home = () => {
   const [U, setU] = useState<number[]>([3, 3, 5, 4, 3]);
   const [P, setP] = useState<number[]>([10, 8, 6, 7, 4]);
 
-  const [fG, setfG] = useState<number[]>([0, 0, 0, 0, 0]);
-  const [fT, setfT] = useState<number[]>([0, 0, 0, 0, 0]);
+  const [fG, setfG] = useState<number[]>();
+  const [fT, setfT] = useState<number[]>();
 
-  const [Uj, setUj] = useState<number[][]>([
-    [1, 2],
-    [1, 2],
-    [1, 2],
-    [1, 2],
-    [1],
-  ]);
-  const [uUj, setuUj] = useState<number[][]>([
-    [0.1, 0.2],
-    [0.1, 0.2],
-    [0.1, 0.2],
-    [0.1, 0.2],
-    [0.1],
-  ]);
+  const [Uj, setUj] = useState<number[][]>();
+  const [uUj, setuUj] = useState<number[][]>();
 
-  const [uO, setuO] = useState<number[]>([0.1, 0.1, 0.1, 0.1, 0.1]);
+  const [uO, setuO] = useState<number[]>();
 
-  const calculateValuation = () => {
-    setfG(membershipFunc(G, A, B));
-    setfT(membershipFunc(T, A, B));
-    setUj(defineTerms(fG, fT));
-    setuUj(termU(fG, fT, Uj));
-    setuO(maxAB(Uj, uUj, U));
+  const calculate = () => {
+    const res = calculateValuation(G, A, B, T, U, P);
+
+    setfG(res.fG);
+    setfT(res.fT);
+    setUj(res.Uj);
+    setuUj(res.uUj);
+    setuO(res.uO);
 
     setIsCalculated(true);
   };
 
-  const setDefaultValues = () => {
+  const defaultValues = () => {
     setG([70, 50, 40, 150, 65]);
     setA([20, 15, 10, 50, 25]);
     setB([115, 60, 50, 225, 90]);
-
     setT([80, 55, 35, 165, 50]);
     setU([3, 3, 5, 4, 3]);
     setP([10, 8, 6, 7, 4]);
 
     setIsCalculated(false);
   };
+
+  const clearValues = () => {
+    setG([0, 0, 0, 0, 0]);
+    setA([0, 0, 0, 0, 0]);
+    setB([0, 0, 0, 0, 0]);
+    setT([0, 0, 0, 0, 0]);
+    setU([0, 0, 0, 0, 0]);
+    setP([0, 0, 0, 0, 0]);
+
+    setIsCalculated(false);
+  };
+
+  useEffect(() => {
+    isCalculated && calculate();
+  }, [G, A, B, T, U, P]);
 
   return (
     <main className="flex flex-col gap-8 min-h-[80vh] items-center justify-center px-8">
@@ -82,17 +86,16 @@ const Home = () => {
       </div>
 
       <div className="flex flex-row gap-2">
-        <Button onClick={setDefaultValues}>Default Values</Button>
-
-        <Button
-          className="bg-blue-600 hover:bg-blue-500"
-          onClick={calculateValuation}
-        >
+        <Button variant={"destructive"} onClick={clearValues}>
+          Clear
+        </Button>
+        <Button onClick={defaultValues}>Default Values</Button>
+        <Button className="bg-blue-600 hover:bg-blue-500" onClick={calculate}>
           Calculate
         </Button>
       </div>
 
-      {isCalculated && (
+      {isCalculated && fG && fT && Uj && uUj && uO && (
         <>
           <ModelOneTable G={G} fG={fG} T={T} fT={fT} />
           <UTable Uj={Uj} uUj={uUj} UjStar={U} />
