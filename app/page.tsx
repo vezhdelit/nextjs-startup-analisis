@@ -2,11 +2,12 @@
 
 import InputTables from "@/components/InputTables";
 import ModelOneTable from "@/components/ModelOneTable";
+import StartupEvaluationView from "@/components/StartupEvaluationView";
 import UTable from "@/components/UTable";
-import ValuationTable from "@/components/ValuationTable";
+import EvaluationTable from "@/components/EvaluationTable";
 import { Button } from "@/components/ui/button";
 
-import { calculateValuation } from "@/lib/utils";
+import { startupEvaluation } from "@/lib/utils";
 import { useEffect, useState } from "react";
 
 const Home = () => {
@@ -28,14 +29,17 @@ const Home = () => {
 
   const [uO, setuO] = useState<number[]>();
 
+  const [finalRes, setFinalRes] = useState<number>();
+
   const calculate = () => {
-    const res = calculateValuation(G, A, B, T, U, P);
+    const res = startupEvaluation(G, A, B, T, U, P);
 
     setfG(res.fG);
     setfT(res.fT);
     setUj(res.Uj);
     setuUj(res.uUj);
     setuO(res.uO);
+    setFinalRes(res.finalRes);
 
     setIsCalculated(true);
   };
@@ -67,7 +71,7 @@ const Home = () => {
   }, [G, A, B, T, U, P]);
 
   return (
-    <main className="flex flex-col gap-8 min-h-[80vh] items-center justify-center px-8">
+    <main className="flex flex-col gap-8 min-h-[80vh] items-center justify-center p-8 pb-16">
       <div className="">
         <InputTables
           G={G}
@@ -95,11 +99,12 @@ const Home = () => {
         </Button>
       </div>
 
-      {isCalculated && fG && fT && Uj && uUj && uO && (
+      {isCalculated && fG && fT && Uj && uUj && uO && finalRes && (
         <>
           <ModelOneTable G={G} fG={fG} T={T} fT={fT} />
           <UTable Uj={Uj} uUj={uUj} UjStar={U} />
-          <ValuationTable uO={uO} />
+          <EvaluationTable uO={uO} />
+          <StartupEvaluationView finalRes={finalRes} />
         </>
       )}
     </main>

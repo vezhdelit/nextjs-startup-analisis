@@ -5,7 +5,7 @@ export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
 }
 
-export const calculateValuation = (
+export const startupEvaluation = (
   G: number[],
   A: number[],
   B: number[],
@@ -15,9 +15,13 @@ export const calculateValuation = (
 ) => {
   const fG = membershipFunc(G, A, B);
   const fT = membershipFunc(T, A, B);
+
   const Uj = defineTerms(fG, fT);
   const uUj = termU(fG, fT, Uj);
   const uO = maxAB(Uj, uUj, U);
+
+  const fP = normalize(P);
+  const finalRes = +uO.reduce((a, b, index) => a + b * fP[index], 0).toFixed(3);
 
   return {
     fG: fG,
@@ -25,6 +29,8 @@ export const calculateValuation = (
     Uj: Uj,
     uUj: uUj,
     uO: uO,
+    fP: fP,
+    finalRes: finalRes,
   };
 };
 
@@ -137,6 +143,7 @@ export const termU = (fG: number[], fT: number[], Uj: number[][]) => {
 export const maxAB = (Uj: number[][], uUj: number[][], UjStar: number[]) => {
   const res = UjStar.map((_, index) => {
     let A;
+
     if (Uj[index][0] === UjStar[index]) {
       A = uUj[index][0];
     } else if (Uj[index][1] === UjStar[index]) {
@@ -146,8 +153,16 @@ export const maxAB = (Uj: number[][], uUj: number[][], UjStar: number[]) => {
     }
 
     let B;
-    if (Uj[index][0] + 1 === UjStar[index]) {
+    if (
+      Uj[index][0] + 1 === UjStar[index] ||
+      Uj[index][0] - 1 === UjStar[index]
+    ) {
       B = uUj[index][0] / 2;
+    } else if (
+      Uj[index][1] + 1 === UjStar[index] ||
+      Uj[index][1] - 1 === UjStar[index]
+    ) {
+      B = uUj[index][1] / 2;
     } else {
       B = 0;
     }
@@ -156,4 +171,9 @@ export const maxAB = (Uj: number[][], uUj: number[][], UjStar: number[]) => {
   });
 
   return res;
+};
+
+export const normalize = (P: number[]) => {
+  const sum = P.reduce((a, b) => a + b, 0);
+  return P.map((number) => number / sum);
 };

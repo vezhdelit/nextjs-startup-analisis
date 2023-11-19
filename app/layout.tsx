@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
 import Header from "@/components/shared/Header";
+import Footer from "@/components/shared/Footer";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -16,8 +17,8 @@ const RootLayout = ({ children }: { children: React.ReactNode }) => {
       <body className={`${inter.className}  text-black bg-white `}>
         <main className="mx-auto min-h-screen flex flex-col max-w-screen-xl ">
           <Header />
-
           {children}
+          <Footer />
         </main>
       </body>
     </html>

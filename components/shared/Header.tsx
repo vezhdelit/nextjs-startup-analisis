@@ -30,7 +30,7 @@ const Header = (props: Props) => {
   );
 
   return (
-    <div className=" border-b p-4">
+    <header className=" border-b p-4">
       <nav className=" flex  justify-between">
         {routes.map((item) => (
           <Button
@@ -45,7 +45,7 @@ const Header = (props: Props) => {
           </Button>
         ))}
       </nav>
-    </div>
+    </header>
   );
 };
 
