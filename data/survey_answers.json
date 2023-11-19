@@ -1,0 +1,33 @@
+{
+  "G1_IDEA": {
+    "idea_state": 20,
+    "idea_categoty": 10,
+    "social_meaning": 20,
+    "idea_strength": 20
+  },
+  "G2_AUTHOR": {
+    "bussiness_experience": 20,
+    "managment_experience": 15,
+    "invested_hours_into_startup": 15
+  },
+  "G3_COMPARISON": {
+    "main_competitors": 25,
+    "analogs_with_investments": 15
+  },
+  "G4_COMMERCIAL": {
+    "parthers": 20,
+    "intellectual_property": 25,
+    "bussinness_plan": 20,
+    "invested_own_founds": 20,
+    "corp_lawyer": 25,
+    "intellectual_property_specialist": 20,
+    "marketing_plans": 20
+  },
+  "G5_EXPRECTED_RESULTS": {
+    "competetive": 20,
+    "marketing_growth": 10,
+    "expected_income_next_one_year": 15,
+    "expected_income_next_five_year": 10,
+    "expected_gross_profit_after_launch": 10
+  }
+}
