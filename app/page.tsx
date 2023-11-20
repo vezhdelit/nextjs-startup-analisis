@@ -1,6 +1,6 @@
 "use client";
 
-import InputTables from "@/components/InputTables";
+import InputTables from "@/components/EvaluationInputTables";
 import ModelOneTable from "@/components/ModelOneTable";
 import StartupEvaluationView from "@/components/StartupEvaluationView";
 import UTable from "@/components/UTable";
