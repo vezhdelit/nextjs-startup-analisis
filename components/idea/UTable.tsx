@@ -11,7 +11,7 @@ interface UTableProps {
 const UTable = ({ Uj, uUj, UjStar }: UTableProps) => {
   return (
     <div className="flex flex-col">
-      <h2 className="p-4 font-medium">Table of U</h2>
+      <h2 className="p-4 font-medium">Таблиця термів U</h2>
       <div className="border rounded-lg ">
         <Table>
           <TableBody>

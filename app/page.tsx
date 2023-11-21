@@ -1,13 +1,13 @@
 "use client";
 
-import InputTables from "@/components/EvaluationInputTables";
-import ModelOneTable from "@/components/ModelOneTable";
-import StartupEvaluationView from "@/components/StartupEvaluationView";
-import UTable from "@/components/UTable";
-import EvaluationTable from "@/components/EvaluationTable";
+import InputTables from "@/components/idea/EvaluationInputTables";
+import ModelOneTable from "@/components/idea/ModelOneTable";
+import StartupEvaluationView from "@/components/idea/StartupEvaluationView";
+import UTable from "@/components/idea/UTable";
+import EvaluationTable from "@/components/idea/EvaluationTable";
 import { Button } from "@/components/ui/button";
 
-import { startupEvaluation } from "@/lib/utils";
+import { startupEvaluation } from "@/lib/idea";
 import { useEffect, useState } from "react";
 
 const Home = () => {
@@ -91,11 +91,11 @@ const Home = () => {
 
       <div className="flex flex-row gap-2">
         <Button variant={"destructive"} onClick={clearValues}>
-          Clear
+          Очистити
         </Button>
-        <Button onClick={defaultValues}>Default Values</Button>
+        <Button onClick={defaultValues}>Дані за замовчуванням</Button>
         <Button className="bg-blue-600 hover:bg-blue-500" onClick={calculate}>
-          Calculate
+          Аналіз
         </Button>
       </div>
 

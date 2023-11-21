@@ -9,7 +9,7 @@ interface EvaluationTableTableProps {
 const EvaluationTable = ({ uO }: EvaluationTableTableProps) => {
   return (
     <div className="flex flex-col">
-      <h2 className="p-4 font-medium">Table of Valuation</h2>
+      <h2 className="p-4 font-medium">Оцінки по кожній групі категорій</h2>
       <div className="border rounded-lg ">
         <Table>
           <TableBody>

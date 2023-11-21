@@ -12,7 +12,7 @@ interface ModelOneTableProps {
 const ModelOneTable = ({ G, fG, T, fT }: ModelOneTableProps) => {
   return (
     <div className="flex flex-col">
-      <h2 className="p-4 font-medium">Model One Table</h2>
+      <h2 className="p-4 font-medium">Результати першого етапу</h2>
       <div className="border rounded-lg ">
         <Table>
           <TableBody>

@@ -50,7 +50,7 @@ const InputTables = ({
   return (
     <div className=" flex flex-col md:flex-row gap-8">
       <div className="flex flex-col">
-        <h2 className="p-4 font-medium">Survey Data</h2>
+        <h2 className="p-4 font-medium">Дані опитування</h2>
         <div className="border rounded-lg ">
           <Table>
             <TableBody>
@@ -119,7 +119,7 @@ const InputTables = ({
       </div>
 
       <div>
-        <h2 className="p-4 font-medium">Investors Data</h2>
+        <h2 className="p-4 font-medium">Дані експерта</h2>
         <div className="border rounded-lg">
           <Table>
             <TableBody>
