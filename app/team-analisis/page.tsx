@@ -1,5 +1,6 @@
 "use client";
 import OTable from "@/components/team/OTable";
+import TeamEvaluationView from "@/components/team/TeamEvaluationView";
 import TeamInput from "@/components/team/TeamInput";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -37,12 +38,17 @@ const RiskAnalisisPage = () => {
   const [O2b, setO2b] = useState<number[]>([]);
   const [O3, setO3] = useState<number[]>([]);
 
+  const [Z, setZ] = useState<number>();
+
   const calculate = () => {
-    const res = teamEvaluation(K1, K2a, K2b, K3);
+    const res = teamEvaluation(K1, K2a, K2b, K3, A, B);
+
     setO1(res.O1);
     setO2a(res.O2a);
     setO2b(res.O2b);
     setO3(res.O3);
+
+    setZ(+res.Z.toFixed(2));
 
     setIsCalculated(true);
   };
@@ -53,11 +59,11 @@ const RiskAnalisisPage = () => {
 
   return (
     <main className="flex min-h-[80vh] items-center justify-center">
-      <div className="flex flex-col justify-center">
-        <div className="flex flex-row">
+      <div className="flex flex-col justify-center gap-6">
+        <div className="flex flex-row gap-4">
           <div className="flex flex-col">
-            <div className="flex flex-row">
-              <h2 className="p-4 font-medium">Stability</h2>
+            <div className="flex flex-row items-center border-b mb-16">
+              <h2 className="p-4 font-medium">Стабільність та згуртованість</h2>
               <Input
                 value={A[0]}
                 onChange={(e) => {
@@ -65,14 +71,14 @@ const RiskAnalisisPage = () => {
                   newA[0] = +e.target.value;
                   setA(newA);
                 }}
-                className="w-20 mr-4 ml-auto"
+                className="w-20 mr-4 ml-auto "
               />
             </div>
             <TeamInput K={K1} setK={setK1} />
           </div>
           <div className="flex flex-col">
-            <div className="flex flex-row">
-              <h2 className="p-4 font-medium">Professionalism</h2>
+            <div className="flex flex-row  items-center border-b mb-2">
+              <h2 className="p-4 font-medium">Професійні компетенції</h2>
               <Input
                 value={A[1]}
                 onChange={(e) => {
@@ -84,8 +90,8 @@ const RiskAnalisisPage = () => {
               />{" "}
             </div>
             <div className="flex flex-col">
-              <div className="flex flex-row">
-                <h2 className="p-4 font-medium">Lider</h2>
+              <div className="flex flex-row items-center">
+                <h2 className="p-4 font-medium">Проф. компетенції лідерів</h2>
                 <Input
                   value={B[0]}
                   onChange={(e) => {
@@ -98,9 +104,9 @@ const RiskAnalisisPage = () => {
               </div>
               <TeamInput K={K2a} setK={setK2a} />
             </div>
-            <div className="flex flex-col">
-              <div className="flex flex-row">
-                <h2 className="p-4 font-medium">Team</h2>
+            <div className="flex flex-col pt-2">
+              <div className="flex flex-row items-center">
+                <h2 className="p-4 font-medium">Проф. компетенції команди</h2>
                 <Input
                   value={B[0]}
                   onChange={(e) => {
@@ -115,8 +121,8 @@ const RiskAnalisisPage = () => {
             </div>
           </div>
           <div className="flex flex-col">
-            <div className="flex flex-row">
-              <h2 className="p-4 font-medium">Activity</h2>
+            <div className="flex flex-row items-center">
+              <h2 className="p-4 font-medium">Активність команди</h2>
               <Input
                 value={A[1]}
                 onChange={(e) => {
@@ -130,14 +136,25 @@ const RiskAnalisisPage = () => {
             <TeamInput K={K3} setK={setK3} />
           </div>
         </div>
-        <div className="flex flex-col">
-          {" "}
-          <OTable K={O1} title="" />
-          <OTable K={O2a} title="" />
-          <OTable K={O2b} title="" />
-          <OTable K={O3} title="" />
-        </div>
-        <Button onClick={calculate}>Calculate</Button>
+
+        <Button
+          className="w-fit mx-auto bg-blue-600 hover:bg-blue-500"
+          onClick={calculate}
+        >
+          Аналіз
+        </Button>
+        {Z && (
+          <div className="flex flex-row gap-8 mx-auto pb-12">
+            <OTable K={O1} title="" />
+            <div>
+              <OTable K={O2a} title="" />
+              <OTable K={O2b} title="" />
+            </div>
+
+            <OTable K={O3} title="" />
+            <TeamEvaluationView finalRes={Z} />
+          </div>
+        )}
       </div>
     </main>
   );
