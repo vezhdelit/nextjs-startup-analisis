@@ -51,15 +51,15 @@ const options: any = {
   },
 };
 interface MyLineChartProps {
-  minFitness: number[];
-  maxFitness: number[];
+  bestFitness: number[];
+  worstFitness: number[];
   meanFitness: number[];
   firstRecordsAmount: number;
 }
 
 const MyLineChart = ({
-  minFitness,
-  maxFitness,
+  bestFitness,
+  worstFitness,
   meanFitness,
   firstRecordsAmount = 10,
 }: MyLineChartProps) => {
@@ -79,14 +79,14 @@ const MyLineChart = ({
             {
               label: "Найбільш пристосований індивід",
 
-              data: maxFitness,
+              data: bestFitness,
               backgroundColor: "#22c55e",
               borderColor: "#22c55e",
             },
             {
               label: "Найменш пристосований індивід",
 
-              data: minFitness,
+              data: worstFitness,
               backgroundColor: "#ef4444",
               borderColor: "#ef4444",
             },

@@ -221,8 +221,16 @@ const Home = () => {
               onChange={(e) => setFirstRecordsToShowCount(+e.target.value)}
             />
             <MyLineChart
-              minFitness={result.min_fitness_values}
-              maxFitness={result.max_fitness_values}
+              bestFitness={
+                result.min
+                  ? result.min_fitness_values
+                  : result.max_fitness_values
+              }
+              worstFitness={
+                result.min
+                  ? result.max_fitness_values
+                  : result.min_fitness_values
+              }
               meanFitness={result.mean_fitness_values}
               firstRecordsAmount={firstRecordsToShowCount}
             />
