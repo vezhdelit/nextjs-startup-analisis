@@ -11,9 +11,14 @@ const Header = (props: Props) => {
   const routes = useMemo(
     () => [
       {
-        label: "Оцінка ідеї",
+        label: "Гeнетичний алгоритм",
         href: "/",
         active: pathname === "/",
+      },
+      {
+        label: "Оцінка ідеї",
+        href: "/idea-analisis",
+        active: pathname === "/idea-analisis",
       },
       {
         label: "Оцінка ризику",

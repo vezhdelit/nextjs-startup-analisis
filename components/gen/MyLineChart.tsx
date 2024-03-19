@@ -1,0 +1,100 @@
+"use client";
+
+import {
+  Chart as ChartJS,
+  CategoryScale,
+  LinearScale,
+  PointElement,
+  LineElement,
+  Tooltip,
+  Legend,
+} from "chart.js";
+import { Line } from "react-chartjs-2";
+
+ChartJS.register(
+  CategoryScale,
+  LinearScale,
+  PointElement,
+  LineElement,
+  Legend,
+  Tooltip
+);
+
+const options: any = {
+  plugins: {
+    legend: {
+      position: "bottom",
+      align: "center",
+      labels: {
+        font: {
+          size: 14, // Set the font size
+          weight: "bold", // Set the font weight
+          lineHeight: 1.2,
+        },
+        color: "black", // Set the font color
+        textAlign: "center",
+        usePointStyle: true,
+        padding: 20,
+        pointStyle: "circle",
+
+        point: {
+          radius: 2,
+        },
+      },
+    },
+  },
+
+  scales: {
+    x: {
+      display: false,
+    },
+  },
+};
+interface MyLineChartProps {
+  minFitness: number[];
+  maxFitness: number[];
+  meanFitness: number[];
+  firstRecordsAmount: number;
+}
+
+const MyLineChart = ({
+  minFitness,
+  maxFitness,
+  meanFitness,
+  firstRecordsAmount = 10,
+}: MyLineChartProps) => {
+  return (
+    <div className=" flex aspect-video w-full items-center justify-center">
+      <Line
+        options={options}
+        data={{
+          labels: new Array(firstRecordsAmount).fill("") || [],
+          datasets: [
+            {
+              label: "Середня пристосованість індивідів",
+              data: meanFitness,
+              backgroundColor: "#eab308",
+              borderColor: "#eab308",
+            },
+            {
+              label: "Найбільш пристосований індивід",
+
+              data: maxFitness,
+              backgroundColor: "#22c55e",
+              borderColor: "#22c55e",
+            },
+            {
+              label: "Найменш пристосований індивід",
+
+              data: minFitness,
+              backgroundColor: "#ef4444",
+              borderColor: "#ef4444",
+            },
+          ],
+        }}
+      />
+    </div>
+  );
+};
+
+export default MyLineChart;
