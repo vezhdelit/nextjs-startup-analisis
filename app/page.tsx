@@ -1,6 +1,7 @@
 "use client";
 
 import MyLineChart from "@/components/gen/MyLineChart";
+import MyDialog from "@/components/shared/MyDialog";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -120,6 +121,10 @@ const Home = () => {
 
   return (
     <main className="flex w-full flex-col gap-8 min-h-[80vh] items-center justify-center p-8 pb-16">
+      <h2 className="flex items-center text-2xl font-bold gap-2">
+        Задача апроксимації функції на основі генетичний алгоритму
+        <MyDialog />
+      </h2>
       <div className="flex w-full flex-row gap-16 justify-center">
         <div className=" flex flex-col max-w-md w-full gap-4">
           <div className=" flex flex-col w-full gap-2">
