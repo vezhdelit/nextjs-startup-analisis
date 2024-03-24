@@ -257,7 +257,7 @@ const Home = () => {
               meanFitness={result.mean_fitness_values}
               firstRecordsAmount={firstRecordsToShowCount}
             />
-            {result.min ? (
+            {result.min != null ? (
               <div>
                 <Label>Мінімальне значення функції </Label>
                 <Input

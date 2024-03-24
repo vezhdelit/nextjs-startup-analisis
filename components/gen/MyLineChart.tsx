@@ -63,6 +63,7 @@ const MyLineChart = ({
   meanFitness,
   firstRecordsAmount = 10,
 }: MyLineChartProps) => {
+  const showDots = firstRecordsAmount <= 25;
   return (
     <div className=" flex aspect-video w-full items-center justify-center">
       <Line
@@ -75,6 +76,7 @@ const MyLineChart = ({
               data: meanFitness,
               backgroundColor: "#eab308",
               borderColor: "#eab308",
+              pointRadius: showDots ? 3 : 0,
             },
             {
               label: "Найбільш пристосований індивід",
@@ -82,6 +84,7 @@ const MyLineChart = ({
               data: bestFitness,
               backgroundColor: "#22c55e",
               borderColor: "#22c55e",
+              pointRadius: showDots ? 3 : 0,
             },
             {
               label: "Найменш пристосований індивід",
@@ -89,6 +92,7 @@ const MyLineChart = ({
               data: worstFitness,
               backgroundColor: "#ef4444",
               borderColor: "#ef4444",
+              pointRadius: showDots ? 3 : 0,
             },
           ],
         }}
