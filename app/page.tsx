@@ -3,6 +3,7 @@
 import MyLineChart from "@/components/gen/MyLineChart";
 import MyDialog from "@/components/shared/MyDialog";
 import { Button } from "@/components/ui/button";
+import { Checkbox } from "@/components/ui/checkbox";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { useState } from "react";
@@ -19,6 +20,8 @@ const Home = () => {
   const [nVector, setNVector] = useState(2);
   const [limitValueTop, setLimitValueTop] = useState(100);
   const [limitValueDown, setLimitValueDown] = useState(-100);
+  const [randomSeed, setRandomSeed] = useState<any>(1);
+  const [isRandom, setIsRandom] = useState(false);
 
   const [fitnessFunc, setFitnessFunc] = useState(
     "f[0]**2 + 1.5 * f[1]**2 - 2 * f[0] * f[1] + 4 * f[0] - 8 * f[1]"
@@ -38,7 +41,7 @@ const Home = () => {
         N_VECTOR: nVector,
         LIMIT_VALUE_TOP: limitValueTop,
         LIMIT_VALUE_DOWN: limitValueDown,
-        RANDOM_SEED: 1, // Assuming this is a constant value you want to include
+        RANDOM_SEED: isRandom ? null : randomSeed, // Assuming this is a constant value you want to include
       },
       fitness_function: fitnessFunc,
     };
@@ -178,6 +181,26 @@ const Home = () => {
           </div>
 
           <div className=" flex flex-col w-full gap-2">
+            <div className="flex justify-between">
+              <Label>Зерно випадкової генерації</Label>
+              <div className="flex items-center gap-1">
+                <Label htmlFor="random">Вибрати випадково?</Label>
+                <Checkbox
+                  checked={isRandom}
+                  onCheckedChange={(checked) => setIsRandom(!!checked)}
+                  className="data-[state=checked]:bg-blue-500 border-blue-500"
+                  id="random"
+                />
+              </div>
+            </div>
+            <Input
+              value={randomSeed}
+              disabled={isRandom}
+              onChange={(e) => setRandomSeed(+e.target.value)}
+            ></Input>
+          </div>
+
+          <div className=" flex flex-col w-full gap-2">
             <Label>Цільова функція</Label>
             <Input
               value={fitnessFunc}
@@ -267,6 +290,9 @@ const Home = () => {
                 ))}
               </div>
             </div>
+            <Label className=" self-end text-neutral-600">
+              Зерно випадкової генерації: {result.seed} *
+            </Label>
           </div>
         )}
       </div>
