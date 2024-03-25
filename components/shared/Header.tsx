@@ -16,6 +16,16 @@ const Header = (props: Props) => {
         active: pathname === "/",
       },
       {
+        label: "Багатокритеріальний аналіз",
+        href: "/multicriteria-analisis",
+        active: pathname === "/multicriteria-analisis",
+      },
+      {
+        label: "Багатокритеріальний аналіз+",
+        href: "/multicriteria-analisis/advanced",
+        active: pathname === "/multicriteria-analisis/advanced",
+      },
+      {
         label: "Оцінка ідеї",
         href: "/idea-analisis",
         active: pathname === "/idea-analisis",

@@ -69,6 +69,10 @@ const Home = () => {
         // Handle the response data as needed
       })
       .catch((error) => {
+        setResult({
+          error: "Помилка розрахунків. Перевірте правильність вхідних даних",
+          message: error.message,
+        });
         console.error("There was a problem with your fetch operation:", error);
       })
       .finally(() => {
@@ -115,6 +119,10 @@ const Home = () => {
         // Handle the response data as needed
       })
       .catch((error) => {
+        setResult({
+          error: "Помилка розрахунків. Перевірте правильність вхідних даних",
+          message: error.message,
+        });
         console.error("There was a problem with your fetch operation:", error);
       })
       .finally(() => {
@@ -133,6 +141,8 @@ const Home = () => {
           <div className=" flex flex-col w-full gap-2">
             <Label>Розмір популяції</Label>
             <Input
+              min={4}
+              type="number"
               value={populationSize}
               onChange={(e) => setPopulationSize(+e.target.value)}
             ></Input>
@@ -140,6 +150,8 @@ const Home = () => {
           <div className=" flex flex-col w-full gap-2">
             <Label>Максимальна кількість генерацій</Label>
             <Input
+              min={1}
+              type="number"
               value={maxGenerations}
               onChange={(e) => setMaxGenerations(+e.target.value)}
             ></Input>
@@ -147,6 +159,9 @@ const Home = () => {
           <div className=" flex flex-col w-full gap-2">
             <Label>Шанс схрещення хромосом</Label>
             <Input
+              min={0}
+              max={1}
+              type="number"
               value={pCrossover}
               onChange={(e) => setPCrossover(+e.target.value)}
             ></Input>
@@ -161,6 +176,9 @@ const Home = () => {
           <div className=" flex flex-col w-full gap-2">
             <Label>Кількість генів в однієї хромосоми</Label>
             <Input
+              min={1}
+              type="number"
+              step={1}
               value={nVector}
               onChange={(e) => setNVector(+e.target.value)}
             ></Input>
@@ -170,10 +188,12 @@ const Home = () => {
             <Label>Мінімальне/максимальне значення гена</Label>
             <div className=" flex flex-row w-full gap-2">
               <Input
+                type="number"
                 value={limitValueDown}
                 onChange={(e) => setLimitValueDown(+e.target.value)}
               ></Input>
               <Input
+                type="number"
                 value={limitValueTop}
                 onChange={(e) => setLimitValueTop(+e.target.value)}
               ></Input>
@@ -234,7 +254,13 @@ const Home = () => {
               )}
             </Button>
           </div>
+          {(result.error || !(result?.min == null && result?.max == null)) && (
+            <div>
+              <Label className="text-red-500">{result.error}</Label>
+            </div>
+          )}
         </div>
+
         {!!result.min_fitness_values && (
           <div className="flex flex-col gap-6  w-[600px]">
             <Input
