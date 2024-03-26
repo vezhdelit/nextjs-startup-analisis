@@ -179,54 +179,78 @@ const MultiCriteriaPage = () => {
         </div>
         <div className="flex flex-row gap-6">
           <MultiCriteriaTableAdvanced K={K} setK={setK} title="Критерії" />
-          <MultiCriteriaTableAdvanced
-            disabled
-            K={K2}
-            setK={setK2}
-            title="Нормалізаці ваг"
-          />
+          {!!K2.length && (
+            <MultiCriteriaTableAdvanced
+              disabled
+              K={K2}
+              setK={setK2}
+              title="Нормалізаці ваг"
+            />
+          )}
         </div>
-        <div className="flex flex-row gap-6">
-          <MultiCriteriaTableAdvanced
-            disabled
-            K={matrix}
-            setK={setMatrix}
-            title="Матриця"
-          />
-        </div>
-        <div className="flex flex-col">
-          <h2 className="p-4 font-medium">Результат кожної альтернативи</h2>
-          <div className="border rounded-lg w-[500px]">
-            <Table>
-              <TableBody>
-                <TableRow>
-                  {X.map((obj, index) => (
-                    <TableCell className="bg-blue-50  items-center justify-center">
-                      <Label className="pl-6 text-center self-center mx-auto">
-                        X{index + 1}
-                      </Label>
-                    </TableCell>
-                  ))}
-                </TableRow>
-                <TableRow>
-                  {X.map((obj, index) => (
-                    <TableCell>
-                      <Input
-                        key={index}
-                        className="w-[80px]"
-                        disabled
-                        type="number"
-                        value={obj.score.toFixed(2)}
-                      />
-                    </TableCell>
-                  ))}
-                </TableRow>
-              </TableBody>
-            </Table>
+        {!!K2.length && (
+          <div className="flex flex-row gap-6 mx-auto items-center">
+            <div className="flex flex-row gap-6">
+              <MultiCriteriaTableAdvanced
+                disabled
+                K={matrix}
+                setK={setMatrix}
+                title="Матриця"
+              />
+            </div>
+            <div className="flex flex-col gap-4">
+              <div className="flex flex-col">
+                <h2 className="p-4 font-medium">
+                  Результат кожної альтернативи
+                </h2>
+                <div className="border rounded-lg w-[500px]">
+                  <Table>
+                    <TableBody>
+                      <TableRow>
+                        {X.map((obj, index) => (
+                          <TableCell className="bg-blue-50  items-center justify-center">
+                            <Label className="pl-6 text-center self-center mx-auto">
+                              X{index + 1}
+                            </Label>
+                          </TableCell>
+                        ))}
+                      </TableRow>
+                      <TableRow>
+                        {X.map((obj, index) => (
+                          <TableCell>
+                            <Input
+                              key={index}
+                              className="w-[80px]"
+                              disabled
+                              type="number"
+                              value={obj.score.toFixed(2)}
+                            />
+                          </TableCell>
+                        ))}
+                      </TableRow>
+                    </TableBody>
+                  </Table>
+                </div>
+              </div>
+              <div className="border-4 border-blue-500/50 rounded-lg mt-4 w-[500px]">
+                <Table>
+                  <TableBody>
+                    <TableRow>
+                      <TableCell className=" bg-blue-50">
+                        Найкраща альтернатива
+                      </TableCell>
+                      <TableCell className=" text-base font-semibold">
+                        {maxX.name}
+                      </TableCell>
+                    </TableRow>
+                  </TableBody>
+                </Table>
+              </div>
+              {/* Найкраща альтернатива: {maxX.name} з результатом{" "}
+              {maxX?.score?.toFixed(2)} */}
+            </div>
           </div>
-        </div>
-        Найкраща альтернатива: {maxX.name} з результатом{" "}
-        {maxX?.score?.toFixed(2)}
+        )}
       </div>
 
       <div className="flex flex-row gap-2">

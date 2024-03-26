@@ -4,19 +4,22 @@ import { Button } from "@/components/ui/button";
 import MultiCriteriaTable from "@/components/multicriteria/MultiCriteriaTable";
 import MultiCriteriaTableAdvanced from "@/components/multicriteria/MultiCriteriaTableAdvanced";
 import DominationTable from "@/components/multicriteria/DominationTable";
+import DominanceInputTable from "@/components/multicriteria/DominanceInputTable";
+import { Table, TableBody, TableCell, TableRow } from "@/components/ui/table";
+import { Input } from "@/components/ui/input";
 
 const MultiCriteriaPage = () => {
   const [K, setK] = useState<any[]>([
-    { x1: 5, x2: 3, x3: 2, x4: 4 }, //1
-    { x1: 4, x2: 5, x3: 5, x4: 3 }, //2
-    { x1: 4, x2: 3, x3: 4, x4: 2 }, //3
-    { x1: 1, x2: 1, x3: 1, x4: 0 }, //4
-    { x1: 1, x2: 0, x3: 0, x4: 1 }, //5
+    { greater: false, x1: 3000, x2: 4000, x3: 5000, x4: 3500 }, //1
+    { greater: true, x1: 4, x2: 5, x3: 5, x4: 3 }, //2
+    { greater: true, x1: 4, x2: 3, x3: 4, x4: 2 }, //3
+    { greater: true, x1: 1, x2: 1, x3: 1, x4: 0 }, //4
+    { greater: true, x1: 1, x2: 0, x3: 0, x4: 1 }, //5
 
-    { x1: 1, x2: 0, x3: 1, x4: 1 }, //6
-    { x1: 4, x2: 3, x3: 4, x4: 3 }, //7
-    { x1: 3, x2: 5, x3: 5, x4: 1 }, //8
-    { x1: 1, x2: 1, x3: 1, x4: 0 }, //9
+    { greater: true, x1: 1, x2: 0, x3: 1, x4: 1 }, //6
+    { greater: true, x1: 4, x2: 3, x3: 4, x4: 3 }, //7
+    { greater: true, x1: 3, x2: 5, x3: 5, x4: 1 }, //8
+    { greater: true, x1: 1, x2: 1, x3: 1, x4: 0 }, //9
   ]);
 
   const [D, setD] = useState<any[]>([]);
@@ -32,9 +35,15 @@ const MultiCriteriaPage = () => {
     const countsX1 = K.reduce(
       (acc, curr) => {
         Object.entries(curr).forEach(([key, value]) => {
-          if (key !== "x1") {
-            if (curr.x1 >= value) {
-              acc[key]++;
+          if (key !== "x1" && key !== "greater") {
+            if (curr.greater) {
+              if (curr.x1 >= value) {
+                acc[key]++;
+              }
+            } else {
+              if (curr.x1 <= value) {
+                acc[key]++;
+              }
             }
           }
         });
@@ -45,9 +54,15 @@ const MultiCriteriaPage = () => {
     const countsX2 = K.reduce(
       (acc, curr) => {
         Object.entries(curr).forEach(([key, value]) => {
-          if (key !== "x2") {
-            if (curr.x2 >= value) {
-              acc[key]++;
+          if (key !== "x2" && key !== "greater") {
+            if (curr.greater) {
+              if (curr.x2 >= value) {
+                acc[key]++;
+              }
+            } else {
+              if (curr.x2 <= value) {
+                acc[key]++;
+              }
             }
           }
         });
@@ -58,9 +73,15 @@ const MultiCriteriaPage = () => {
     const countsX3 = K.reduce(
       (acc, curr) => {
         Object.entries(curr).forEach(([key, value]) => {
-          if (key !== "x3") {
-            if (curr.x3 >= value) {
-              acc[key]++;
+          if (key !== "x3" && key !== "greater") {
+            if (curr.greater) {
+              if (curr.x3 >= value) {
+                acc[key]++;
+              }
+            } else {
+              if (curr.x3 <= value) {
+                acc[key]++;
+              }
             }
           }
         });
@@ -71,9 +92,15 @@ const MultiCriteriaPage = () => {
     const countsX4 = K.reduce(
       (acc, curr) => {
         Object.entries(curr).forEach(([key, value]) => {
-          if (key !== "x4") {
-            if (curr.x4 >= value) {
-              acc[key]++;
+          if (key !== "x4" && key !== "greater") {
+            if (curr.greater) {
+              if (curr.x4 >= value) {
+                acc[key]++;
+              }
+            } else {
+              if (curr.x4 <= value) {
+                acc[key]++;
+              }
             }
           }
         });
@@ -115,15 +142,75 @@ const MultiCriteriaPage = () => {
     <main className="flex flex-col gap-8 min-h-[80vh] items-center justify-center p-8 pb-16">
       <div className="flex flex-col gap-6">
         <div className="flex flex-row gap-6">
-          <MultiCriteriaTableAdvanced K={K} setK={setK} title="Критерії" />
-          <div className="flex flex-col gap-6">
-            <DominationTable D={D} setD={setD} title="Показники домінуванн" />
-            <div>
-              X1: {sumX1.toFixed(2)}, X2: {sumX2.toFixed(2)}, X3:{" "}
-              {sumX3.toFixed(2)}, X4: {sumX4.toFixed(2)}
+          <DominanceInputTable K={K} setK={setK} title="Критерії" />
+          {!!D.length && (
+            <div className="flex flex-col">
+              <DominationTable D={D} setD={setD} title="Показники домінуванн" />
+              <div>
+                <h2 className="p-4 font-medium">Ранг кожної альтернативи</h2>
+                <div className="border rounded-lg ">
+                  <Table>
+                    <TableBody>
+                      <TableRow>
+                        <TableCell className=" bg-blue-50 w-12">X1</TableCell>
+                        <TableCell>
+                          <Input
+                            step={"1"}
+                            type="number"
+                            value={sumX1.toFixed(2)}
+                          />
+                        </TableCell>
+                      </TableRow>
+                      <TableRow>
+                        <TableCell className=" bg-blue-50 w-12">X2</TableCell>
+                        <TableCell>
+                          <Input
+                            step={"1"}
+                            type="number"
+                            value={sumX2.toFixed(2)}
+                          />
+                        </TableCell>
+                      </TableRow>
+                      <TableRow>
+                        <TableCell className=" bg-blue-50 w-12">X3</TableCell>
+                        <TableCell>
+                          <Input
+                            step={"1"}
+                            type="number"
+                            value={sumX3.toFixed(2)}
+                          />
+                        </TableCell>
+                      </TableRow>
+                      <TableRow>
+                        <TableCell className=" bg-blue-50 w-12">X4</TableCell>
+                        <TableCell>
+                          <Input
+                            step={"1"}
+                            type="number"
+                            value={sumX4.toFixed(2)}
+                          />
+                        </TableCell>
+                      </TableRow>
+                    </TableBody>
+                  </Table>
+                </div>
+              </div>
+              <div className="border-4 border-blue-500/50 rounded-lg mt-4">
+                <Table>
+                  <TableBody>
+                    <TableRow>
+                      <TableCell className=" bg-blue-50">
+                        Найкраща альтернатива
+                      </TableCell>
+                      <TableCell className=" text-base font-semibold">
+                        {maxX.name}
+                      </TableCell>
+                    </TableRow>
+                  </TableBody>
+                </Table>
+              </div>
             </div>
-            <div>Оптимальний вибір: {maxX.name}</div>
-          </div>
+          )}
         </div>
       </div>
 
