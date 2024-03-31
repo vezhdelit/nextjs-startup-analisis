@@ -13,22 +13,128 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import UniversalTable from "@/components/multicriteria/UniversalTable";
+import UniversalTableSimple from "@/components/multicriteria/UniversalTableSimple";
 
 const MultiCriteriaPage = () => {
   const [type, setType] = useState("середня");
 
   const [K, setK] = useState<any[]>([
-    { valuability: 8, x1: 0.67, x2: 0.25, x3: 0, x4: 0.43 }, //1
-    { valuability: 10, x1: 0.8, x2: 1, x3: 1, x4: 0.6 }, //2
-    { valuability: 9, x1: 0, x2: 0.5, x3: 0, x4: 1 }, //3
-    { valuability: 8, x1: 1, x2: 1, x3: 1, x4: 0 }, //4
-    { valuability: 5, x1: 1, x2: 0, x3: 0, x4: 1 }, //5
-
-    { valuability: 6, x1: 1, x2: 0, x3: 1, x4: 1 }, //6
-    { valuability: 9, x1: 1, x2: 0.7, x3: 1, x4: 0.7 }, //7
-    { valuability: 5, x1: 0.5, x2: 1, x3: 1, x4: 0 }, //8
-    { valuability: 3, x1: 1, x2: 1, x3: 1, x4: 0 }, //9
+    {
+      "name": "Корпус",
+      "valuability": 8,
+      "x1": 0.67,
+      "x2": 0.25,
+      "x3": 0,
+      "x4": 0.43,
+      "variations": [
+        { "name": "Striker m12 0", "value": 0 },
+        { "name": "Rebel k1 0.25", "value": 0.25 },
+        { "name": "Revolut2 0.43", "value": 0.43 },
+        { "name": "SupaCase 0.67", "value": 0.67 }
+      ]
+    },
+    {
+      "name": "Процесор",
+      "valuability": 10,
+      "x1": 0.8,
+      "x2": 1,
+      "x3": 1,
+      "x4": 0.6,
+      "variations": [
+        { "name": "i5 11400 0.8", "value": 0.8 },
+        { "name": "i7 13900f 1", "value": 1 },
+        { "name": "i3 8400 0.6", "value": 0.6 }
+      ]
+    },
+    {
+      "name": "Кулер",
+      "valuability": 9,
+      "x1": 0,
+      "x2": 0.5,
+      "x3": 0,
+      "x4": 1,
+      "variations": [
+        { "name": "Sunzi 0", "value": 0 },
+        { "name": "GameMax 0.5", "value": 0.5 },
+        { "name": "Aerocool k1 1", "value": 1 }
+      ]
+    },
+    {
+      "name": "Відеокарта",
+      "valuability": 8,
+      "x1": 1,
+      "x2": 1,
+      "x3": 1,
+      "x4": 0,
+      "variations": [
+        { "name": "RTX 4050 0", "value": 0 },
+        { "name": "RTX 3090 1", "value": 1 }
+      ]
+    },
+    {
+      "name": "Блок живлення",
+      "valuability": 5,
+      "x1": 1,
+      "x2": 0,
+      "x3": 0,
+      "x4": 1,
+      "variations": [
+        { "name": "Phantom 700W 1", "value": 1 },
+        { "name": "Aerocool VX500 0", "value": 0 },
+      ]
+    },
+    {
+      "name": "Оперативна пам'ять",
+      "valuability": 6,
+      "x1": 1,
+      "x2": 0,
+      "x3": 1,
+      "x4": 1,
+      "variations": [
+        { "name": "2*16gb 1", "value": 1 },
+        { "name": "2*8gb 0", "value": 0 },
+      ]
+    },
+    {
+      "name": "Постійна пам'ять",
+      "valuability": 9,
+      "x1": 1,
+      "x2": 0.7,
+      "x3": 1,
+      "x4": 0.7,
+      "variations": [
+        { "name": "SSD 512gb 1", "value": 1 },
+        { "name": "HDD 2tb 0.7", "value": 0.7 }
+      ]
+    },
+    {
+      "name": "Материнська плата",
+      "valuability": 5,
+      "x1": 0.5,
+      "x2": 1,
+      "x3": 1,
+      "x4": 0,
+      "variations": [
+        { "name": "Xiang A350 0", "value": 0 },
+        { "name": "Asus Prime A450 0.5", "value": 0.5 },
+        { "name": "Asus TUF gaming B550 1", "value": 1 },
+      ]
+    },
+    {
+      "name": "Термо паста",
+      "valuability": 3,
+      "x1": 1,
+      "x2": 1,
+      "x3": 1,
+      "x4": 0,
+      "variations": [
+        { "name": "Aerocool MX500 1", "value": 1 },
+        { "name": "Thermaltake k600 0", "value": 0 }
+      ]
+    }
   ]);
+
   const [K2, setK2] = useState<any[]>([]);
   const [X, setX] = useState<any[]>([]);
   const [maxX, setMaxX] = useState<any>({});
@@ -38,9 +144,8 @@ const MultiCriteriaPage = () => {
       return acc + obj.valuability;
     }, 0);
     const k2 = K.map((obj) => {
-      return { ...obj, valuability: obj.valuability / sum };
+      return { ...obj, valuability: obj.valuability / sum, variations: null };
     });
-    console.log(k2);
 
     setK2(k2);
 
@@ -148,10 +253,11 @@ const MultiCriteriaPage = () => {
             </SelectContent>
           </Select>
         </div>
-        <div className="flex flex-row gap-6">
-          <MultiCriteriaTable K={K} setK={setK} title="Критерії" />
+        <div className="flex flex-col items-center gap-6">
+          <UniversalTable K={K} setK={setK} title="Критерії" />
+          {/* <MultiCriteriaTable K={K} setK={setK} title="Критерії" /> */}
           {!!X.length && (
-            <MultiCriteriaTable disabled K={K2} setK={setK2} title="2 етап" />
+            <UniversalTableSimple disabled K={K2} setK={setK2} title="Нормалізація даних" />
           )}
         </div>
         {!!X.length && (
