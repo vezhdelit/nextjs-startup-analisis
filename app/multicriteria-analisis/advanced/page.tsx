@@ -15,16 +15,148 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import UniversalTableDominance from "@/components/multicriteria/UniversalTableDominance";
+import UniversalTable from "@/components/multicriteria/UniversalTable";
+import UniversalTableSimple from "@/components/multicriteria/UniversalTableSimple";
 
 const MultiCriteriaPage = () => {
   const [type, setType] = useState("середня");
 
   const [K, setK] = useState<any[]>([
-    { valuability: 8, expected: 20, x1: 10, x2: 20, x3: 20, x4: 20 }, //1
-    { valuability: 10, expected: 20, x1: 0, x2: 10, x3: 10, x4: 20 }, //2
-    { valuability: 9, expected: 15, x1: 15, x2: 0, x3: 20, x4: 15 }, //3
-    { valuability: 8, expected: 20, x1: 25, x2: 15, x3: 5, x4: 5 }, //4
+    // {
+    //   "name": "Корпус",
+    //   "valuability": 8,
+    //   "x1": 0.67,
+    //   "x2": 0.25,
+    //   "x3": 0,
+    //   "x4": 0.43,
+    //   "variations": [
+    //     { "name": "Striker m12 0", "value": 0 },
+    //     { "name": "Rebel k1 0.25", "value": 0.25 },
+    //     { "name": "Revolut2 0.43", "value": 0.43 },
+    //     { "name": "SupaCase 0.67", "value": 0.67 }
+    //   ]
+    // },
+    {
+      "name": "Процесор",
+      "valuability": 8,
+      "expected": 20,
+      "x1": 10,
+      "x2": 20,
+      "x3": 20,
+      "x4": 20,
+      "variations": [
+        { "name": "i3 7400 5", "value": 5 },
+        { "name": "i3 13400 10", "value": 5 },
+        { "name": "i5 11400 10", "value": 10 },
+        { "name": "i5 13400 15", "value": 15 },
+        { "name": "i7 13900f 20", "value": 20 },
+      ]
+    },
+    // {
+    //   "name": "Кулер",
+    //   "valuability": 9,
+    //   "x1": 0,
+    //   "x2": 0.5,
+    //   "x3": 0,
+    //   "x4": 1,
+    //   "variations": [
+    //     { "name": "Sunzi 0", "value": 0 },
+    //     { "name": "GameMax 0.5", "value": 0.5 },
+    //     { "name": "Aerocool k1 1", "value": 1 }
+    //   ]
+    // },
+    {
+      "name": "Відеокарта",
+      "valuability": 10,
+      "expected": 20,
+      "x1": 0,
+      "x2": 10,
+      "x3": 10,
+      "x4": 20,
+      "variations": [
+        { "name": "RTX 1050ti 0", "value": 0 },
+        { "name": "RTX 1070 5", "value": 5 },
+        { "name": "RTX 3060 10", "value": 10 },
+        { "name": "RTX 3070 15", "value": 15 },
+        { "name": "RTX 3090 20", "value": 20 }
+      ]
+    },
+    {
+      "name": "Блок живлення",
+      "valuability": 9,
+      "expected": 15,
+      "x1": 15,
+      "x2": 0,
+      "x3": 20,
+      "x4": 15,
+      "variations": [
+        { "name": "Thermaltake VX1000W 20", "value": 20 },
+        { "name": "Phantom 700W 15", "value": 15 },
+        { "name": "Powermate 500W 10", "value": 10 },
+        { "name": "Aerocool 400W 5", "value": 5 },
+        { "name": "Aerocool VX300 0", "value": 0 },
+      ]
+    },
+    {
+      "name": "Оперативна пам'ять",
+      "valuability": 8,
+      "expected": 20,
+      "x1": 25,
+      "x2": 15,
+      "x3": 5,
+      "x4": 5,
+      "variations": [
+        { "name": "2*32gb 6000mhz 25", "value": 25 },
+        { "name": "2*32gb 4000mhz 25", "value": 20 },
+        { "name": "2*16gb 4000mhz 15", "value": 15 },
+        { "name": "2*8gb 4000mhz 15", "value": 15 },
+        { "name": "2*4gb 4000mhz 5", "value": 5 },
+      ]
+    },
+    {
+      "name": "Постійна пам'ять",
+      "valuability": 8,
+      "expected": 20,
+      "x1": 15,
+      "x2": 0,
+      "x3": 20,
+      "x4": 15,
+      "variations": [
+        { "name": "SSD 512gb 20", "value": 20 },
+        { "name": "SSD 256gb 15", "value": 15 },
+        { "name": "HDD 2tb 10", "value": 10 },
+        { "name": "HDD 1tb 5", "value": 5 },
+        { "name": "HDD 512gb 0", "value": 0 }
+      ]
+    },
+    // {
+    //   "name": "Материнська плата",
+    //   "valuability": 5,
+    //   "x1": 0.5,
+    //   "x2": 1,
+    //   "x3": 1,
+    //   "x4": 0,
+    //   "variations": [
+    //     { "name": "Xiang A350 0", "value": 0 },
+    //     { "name": "Asus Prime A450 0.5", "value": 0.5 },
+    //     { "name": "Asus TUF gaming B550 1", "value": 1 },
+    //   ]
+    // },
+    // {
+    //   "name": "Термо паста",
+    //   "valuability": 3,
+    //   "x1": 1,
+    //   "x2": 1,
+    //   "x3": 1,
+    //   "x4": 0,
+    //   "variations": [
+    //     { "name": "Aerocool MX500 1", "value": 1 },
+    //     { "name": "Thermaltake k600 0", "value": 5 }
+    //   ]
+    // }
   ]);
+
   const [K2, setK2] = useState<any[]>([]);
   const [matrix, setMatrix] = useState<any[]>([]);
   const [X, setX] = useState<any[]>([]);
@@ -35,16 +167,15 @@ const MultiCriteriaPage = () => {
       return acc + obj.valuability;
     }, 0);
     const k2 = K.map((obj) => {
-      return { ...obj, valuability: obj.valuability / sum };
+      return { ...obj, valuability: obj.valuability / sum, variations: null };
     });
-    console.log(k2);
 
     setK2(k2);
 
     //only x
     const onlyX = K.map((obj) => {
-      const { valuability, expected, ...xs } = obj;
-      return xs;
+      const { valuability, expected, variations, name, ...other } = obj;
+      return other;
     });
     console.log(onlyX);
 
@@ -69,6 +200,7 @@ const MultiCriteriaPage = () => {
         return 1 - Math.abs(K[i].expected - value) / toDivide;
       });
     });
+    console.log("newX", newX);
 
     setMatrix(newX);
 
@@ -180,9 +312,9 @@ const MultiCriteriaPage = () => {
 
         <div className="flex flex-row gap-6">
           <div className="flex flex-col gap-6">
-            <MultiCriteriaTableAdvanced K={K} setK={setK} title="Критерії" />
+            <UniversalTable K={K} setK={setK} title="Критерії" />
             {!!K2.length && (
-              <MultiCriteriaTableAdvanced
+              <UniversalTableSimple
                 disabled
                 K={K2}
                 setK={setK2}

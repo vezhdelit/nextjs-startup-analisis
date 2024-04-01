@@ -1,8 +1,6 @@
 "use client";
 import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
-import MultiCriteriaTable from "@/components/multicriteria/MultiCriteriaTable";
-import MultiCriteriaTableAdvanced from "@/components/multicriteria/MultiCriteriaTableAdvanced";
 import DominationTable from "@/components/multicriteria/DominationTable";
 import DominanceInputTable from "@/components/multicriteria/DominanceInputTable";
 import { Table, TableBody, TableCell, TableRow } from "@/components/ui/table";

@@ -82,7 +82,7 @@ const UniversalTable = ({
                         </TableCell>
                       );
                     }
-                    else if (property == 'x1' || property == 'x2' || property == 'x3' || property == 'x4') {
+                    else if (property == 'expected' || property == 'x1' || property == 'x2' || property == 'x3' || property == 'x4') {
                       return (
                         <TableCell key={cellIndex}>
                           <Select

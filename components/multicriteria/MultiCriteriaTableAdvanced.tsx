@@ -53,7 +53,7 @@ const MultiCriteriaTableAdvanced = ({
                         className="w-[100px]"
                         step={"1"}
                         type="number"
-                        value={obj[property]}
+                        value={obj[property].toFixed(2)}
                         onChange={(e) => handleChange(e, rowIndex, property)}
                       />
                     </TableCell>
