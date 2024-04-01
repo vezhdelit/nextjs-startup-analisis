@@ -173,7 +173,7 @@ const MultiCriteriaPage = () => {
                     <UniversalTableDominance K={K} setK={setK} title="Критерії" />
                     {!!D.length && (
                         <div className="flex flex-col">
-                            <DominationTable D={D} setD={setD} title="Показники домінуванн" />
+                            <DominationTable D={D} setD={setD} title="Показники домінування" />
                             <div>
                                 <h2 className="p-4 font-medium">Ранг кожної альтернативи</h2>
                                 <div className="border rounded-lg ">
