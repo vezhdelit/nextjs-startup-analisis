@@ -6,86 +6,46 @@ import DominanceInputTable from "@/components/multicriteria/DominanceInputTable"
 import { Table, TableBody, TableCell, TableRow } from "@/components/ui/table";
 import { Input } from "@/components/ui/input";
 import UniversalTable from "@/components/multicriteria/UniversalTable";
+import UniversalTableDominance from "@/components/multicriteria/UniversalTableDominance";
 
 const MultiCriteriaPage = () => {
     const [K, setK] = useState<any[]>([
         {
-            name: 'Ціна', greater: false, x1: 3000, x2: 4000, x3: 5000, x4: 3500,
-            "variations": [
-                { "name": "5000 грн", "value": 5000 },
-                { "name": "4000 грн", "value": 4000 },
-                { "name": "3500 грн", "value": 3500 },
-                { "name": "3000 грн", "value": 3000 }
-            ]
+            name: 'Ціна', greater: false, x1: 2000, x2: 4000, x3: 5000, x4: 3000,
+            type: "price",
         }, //1
         {
             name: 'Кількість видів обліків', greater: true, x1: 4, x2: 5, x3: 5, x4: 3,
-            "variations": [
-                { "name": "5", "value": 5 },
-                { "name": "4", "value": 4 },
-                { "name": "3", "value": 3 },
-                { "name": "2", "value": 2 },
-                { "name": "1", "value": 1 }
-            ]
+            type: "count"
         }, //2
         {
             name: 'Характеристики апаратного забезпечення', greater: true, x1: 4, x2: 3, x3: 4, x4: 2,
-            "variations": [
-                { "name": "Найкращі", "value": 5 },
-                { "name": "Високі", "value": 4 },
-                { "name": "Середні", "value": 3 },
-                { "name": "Малі", "value": 2 },
-                { "name": "Найгірші", "value": 1 }
-            ]
+            type: "quality"
         }, //3
         {
             name: 'Редактор документів', greater: true, x1: 1, x2: 1, x3: 1, x4: 0,
-            "variations": [
-                { "name": "Наявний", "value": 1 },
-                { "name": "Відсутній", "value": 0 },
-            ]
+            type: "boolean"
         }, //4
         {
             name: 'Експорт, імпорт даних', greater: true, x1: 1, x2: 0, x3: 0, x4: 1,
-            "variations": [
-                { "name": "Так", "value": 1 },
-                { "name": "Ні", "value": 0 },
-            ]
+            type: "boolean"
         }, //5
 
         {
             name: 'Робота в мережах', greater: true, x1: 1, x2: 0, x3: 1, x4: 1,
-            "variations": [
-                { "name": "Так", "value": 1 },
-                { "name": "Ні", "value": 0 },
-            ]
+            type: "boolean"
         }, //6
         {
             name: 'Захист інформації', greater: true, x1: 4, x2: 3, x3: 4, x4: 3,
-            "variations": [
-                { "name": "Найкращі", "value": 5 },
-                { "name": "Високі", "value": 4 },
-                { "name": "Середні", "value": 3 },
-                { "name": "Малі", "value": 2 },
-                { "name": "Найгірші", "value": 1 }
-            ]
+            type: "quality"
         }, //7
         {
             name: 'Інтерфейс користувача', greater: true, x1: 3, x2: 4, x3: 4, x4: 2,
-            "variations": [
-                { "name": "Дуже простий", "value": 5 },
-                { "name": "Простий", "value": 4 },
-                { "name": "Середній", "value": 3 },
-                { "name": "Складний", "value": 2 },
-                { "name": "Дуже складний", "value": 1 }
-            ]
+            type: "simplicity"
         }, //8
         {
             name: 'Програмний помічник', greater: true, x1: 1, x2: 1, x3: 1, x4: 0,
-            "variations": [
-                { "name": "Так", "value": 1 },
-                { "name": "Ні", "value": 0 },
-            ]
+            type: "boolean"
         }, //9
     ]);
 
@@ -210,7 +170,7 @@ const MultiCriteriaPage = () => {
             <div className="flex flex-col gap-6">
                 <div className="flex flex-row gap-6">
                     {/* <DominanceInputTable K={K} setK={setK} title="Критерії" /> */}
-                    <UniversalTable K={K} setK={setK} title="Критерії" />
+                    <UniversalTableDominance K={K} setK={setK} title="Критерії" />
                     {!!D.length && (
                         <div className="flex flex-col">
                             <DominationTable D={D} setD={setD} title="Показники домінуванн" />
