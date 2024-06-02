@@ -3,7 +3,12 @@ import React, { useMemo } from "react";
 import { Button } from "../ui/button";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuTrigger } from "../ui/dropdown-menu";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from "../ui/dropdown-menu";
 import { cn } from "@/lib/utils";
 
 type Props = {};
@@ -20,12 +25,17 @@ const Header = (props: Props) => {
             label: "Гeнетичний алгоритм",
             href: "/",
             active: pathname === "/",
-          }
-        ]
+          },
+        ],
       },
       {
         title: "Підтримка прийняття рішень",
-        active: pathname === "/multicriteria-analisis" || pathname === "/multicriteria-analisis/advanced" || pathname === "/dominance" || pathname === "/dominance/advanced",
+        active:
+          pathname === "/multicriteria-analisis" ||
+          pathname === "/multicriteria-analisis/advanced" ||
+          pathname === "/dominance" ||
+          pathname === "/dominance/advanced" ||
+          pathname === "/system-risk-analisis",
         links: [
           {
             label: "Багатокритеріальний аналіз",
@@ -46,13 +56,21 @@ const Header = (props: Props) => {
             label: "Домінантний аналіз+",
             href: "/dominance/advanced",
             active: pathname === "/dominance/advanced",
-          }
+          },
+          {
+            label: "Оцінювання рівня ризику функціонування складних систем",
+            href: "/system-risk-analisis",
+            active: pathname === "/system-risk-analisis",
+          },
         ],
       },
 
       {
         title: "Оцінка стартапу",
-        active: pathname === "/idea-analisis" || pathname === "/risk-analisis" || pathname === "/team-analisis",
+        active:
+          pathname === "/idea-analisis" ||
+          pathname === "/risk-analisis" ||
+          pathname === "/team-analisis",
         links: [
           {
             label: "Оцінка ідеї",
@@ -68,29 +86,33 @@ const Header = (props: Props) => {
             label: "Оцінка команди",
             href: "/team-analisis",
             active: pathname === "/team-analisis",
-          }
-        ]
-      }
-
-
-
+          },
+        ],
+      },
     ],
     [pathname]
   );
 
   return (
     <header className=" border-b p-4">
-      <nav className=" flex  justify-around">
-
+      <nav className=" flex  justify-between">
         {routes.map((route) => (
           <DropdownMenu>
-            <DropdownMenuTrigger className={cn("hover:text-blue-600 font-medium", route.active && "underline text-blue-600 font-semibold")}>{route.title}</DropdownMenuTrigger>
+            <DropdownMenuTrigger
+              className={cn(
+                "hover:text-blue-600 text-sm font-medium",
+                route.active && "underline text-blue-600 font-semibold"
+              )}
+            >
+              {route.title}
+            </DropdownMenuTrigger>
             <DropdownMenuContent>
               {route.links.map((item) => (
                 <DropdownMenuItem>
                   <Button
-                    className={`${item.active && "underline font-bold text-blue-600"
-                      } transition`}
+                    className={`${
+                      item.active && "underline font-bold text-blue-600"
+                    } transition`}
                     key={item.label}
                     variant="link"
                     asChild
@@ -98,7 +120,6 @@ const Header = (props: Props) => {
                     <Link href={item.href}>{item.label}</Link>
                   </Button>
                 </DropdownMenuItem>
-
               ))}
             </DropdownMenuContent>
           </DropdownMenu>
