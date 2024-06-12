@@ -5,6 +5,7 @@ export type SystemControlCriteria = {
   a0?: number;
   a1?: number;
   criteria_rate?: number;
+  u?: number;
 };
 
 export const calcControl = (values: SystemControlCriteria[]) => {
@@ -28,7 +29,28 @@ export const calcControl = (values: SystemControlCriteria[]) => {
   });
 
   values.forEach((value) => {
-    value.criteria_rate = value.a1 * value.safety
+    value.criteria_rate = value.a1 * value.safety;
+  });
+
+  const A0 = 0;
+  const AL = 100;
+
+  values.forEach((value) => {
+    if (value.criteria_rate <= A0) {
+      value.u = 0;
+    } else if (
+      A0 < value.criteria_rate &&
+      value.criteria_rate <= (A0 + AL) / 2
+    ) {
+      value.u = 2 * Math.pow((value.criteria_rate - A0) / (AL - A0), 2);
+    } else if (
+      (A0 + AL) / 2 < value.criteria_rate &&
+      value.criteria_rate <= AL
+    ) {
+      value.u = 1 - 2 * Math.pow((AL - value.criteria_rate) / (AL - A0), 2);
+    } else {
+      value.u = 1;
+    }
   });
 
   console.log(values);
