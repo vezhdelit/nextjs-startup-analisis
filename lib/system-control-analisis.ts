@@ -2,6 +2,7 @@ export type SystemControlCriteria = {
   lingusticValue: "T1" | "T2" | "T3" | "T4" | "T5";
   safety: number; // The safety is in the range [0, 1]
   weight: number;
+  normalizedWeight?: number;
   a0?: number;
   a1?: number;
   criteria_rate?: number;
@@ -32,6 +33,11 @@ export const calcControl = (values: SystemControlCriteria[]) => {
     value.criteria_rate = value.a1 * value.safety;
   });
 
+  const sumWeights = values.reduce((acc, curr) => acc + curr.weight, 0);
+  values.forEach((value) => {
+    value.normalizedWeight = +(value.weight / sumWeights).toFixed(3);
+  });
+
   const A0 = 0;
   const AL = 100;
 
@@ -53,5 +59,11 @@ export const calcControl = (values: SystemControlCriteria[]) => {
     }
   });
 
+  const averageRate = values.reduce(
+    (acc, curr) => acc + curr.u * curr.normalizedWeight,
+    0
+  );
+
   console.log(values);
+  console.log(averageRate);
 };
