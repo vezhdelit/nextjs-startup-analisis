@@ -35,7 +35,8 @@ const Header = (props: Props) => {
           pathname === "/multicriteria-analisis/advanced" ||
           pathname === "/dominance" ||
           pathname === "/dominance/advanced" ||
-          pathname === "/system-risk-analisis",
+          pathname === "/system-risk-analisis" ||
+          pathname === "/system-control-analisis",
         links: [
           {
             label: "Багатокритеріальний аналіз",
@@ -61,6 +62,11 @@ const Header = (props: Props) => {
             label: "Оцінювання рівня ризику функціонування складних систем",
             href: "/system-risk-analisis",
             active: pathname === "/system-risk-analisis",
+          },
+          {
+            label: "Оцінювання  процесу керованості системи у різних режимах",
+            href: "/system-control-analisis",
+            active: pathname === "/system-control-analisis",
           },
         ],
       },

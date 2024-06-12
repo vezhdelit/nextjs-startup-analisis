@@ -50,6 +50,7 @@ const RiskEvaluationView = ({ finalRes }: RiskEvaluationViewProps) => {
   const evaluationText = getEvaluationText(finalRes);
   const IconComponent = evaluationText.icon;
 
+  if(!finalRes) return null
   return (
     <div className="flex flex-col items-center justify-center gap-6">
       <IconComponent className={` h-32 w-32 ${evaluationText.color}`} />

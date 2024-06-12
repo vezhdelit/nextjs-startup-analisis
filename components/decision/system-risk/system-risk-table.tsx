@@ -1,0 +1,125 @@
+import { Input } from "@/components/ui/input";
+import { Table, TableBody, TableCell, TableRow } from "@/components/ui/table";
+import { Criteria } from "@/types";
+import {
+  Select,
+  SelectContent,
+  SelectGroup,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
+import { SystemRiskCriteria } from "@/lib/system-risk-analisis";
+
+interface RiskInputTablesProps {
+  K: any;
+  setK: any;
+  title: string;
+}
+
+const SystemRiskTable = ({ K, setK, title }: RiskInputTablesProps) => {
+  const handleInputChange = (
+    value: number,
+    index: number,
+    param: any,
+    array: any,
+    arraySetter: any
+  ) => {
+    const newArray = [...array];
+    newArray[index][param] = value;
+    arraySetter(newArray);
+  };
+
+  const handleSelectChange = (
+    value: string,
+    index: number,
+    array: any,
+    arraySetter: any
+  ) => {
+    const newArray = [...array];
+    newArray[index].lingusticValue = value;
+    arraySetter(newArray);
+  };
+
+  return (
+    <div className=" flex flex-col md:flex-row gap-8">
+      <div className="flex flex-col">
+        <h2 className="p-4 font-medium">{title}</h2>
+        <div className="border rounded-lg ">
+          <Table>
+            <TableBody>
+              {K.map((obj: SystemRiskCriteria, index: number) => (
+                <TableRow className=" -my-1 h-8" key={index}>
+                  <TableCell className=" -my-1 h-8 bg-blue-50 font-medium">
+                    R{index+1}
+                  </TableCell>
+                  <TableCell>
+                    <Select
+                      value={obj.lingusticValue}
+                      onValueChange={(value) =>
+                        handleSelectChange(value, index, K, setK)
+                      }
+                    >
+                      <SelectTrigger className=" -my-1 h-8 w-[70px]">
+                        <SelectValue />
+                      </SelectTrigger>
+                      <SelectContent>
+                        <SelectGroup>
+                          <SelectItem value="T5">T5</SelectItem>
+                          <SelectItem value="T4">T4</SelectItem>
+                          <SelectItem value="T3">T3</SelectItem>
+                          <SelectItem value="T2">T2</SelectItem>
+                          <SelectItem value="T1">T1</SelectItem>
+                        </SelectGroup>
+                      </SelectContent>
+                    </Select>
+                  </TableCell>
+                  <TableCell>
+                    <Input
+                      className=" -my-1 h-8 w-[80px]"
+                      min="0"
+                      max="1"
+                      step="0.1"
+                      type="number"
+                      value={obj.credibility}
+                      onChange={(e) =>
+                        handleInputChange(
+                          parseFloat(e.target.value),
+                          index,
+                          "credibility",
+                          K,
+                          setK
+                        )
+                      }
+                    />
+                  </TableCell>
+                  <TableCell>
+                    <Input
+                      className=" -my-1 h-8 w-[80px]"
+                      min="0"
+                      max="10"
+                      step="1"
+                      type="number"
+                      value={obj.weight}
+                      onChange={(e) =>
+                        handleInputChange(
+                          parseFloat(e.target.value),
+                          index,
+                          "weight",
+                          K,
+                          setK
+                        )
+                      }
+                    />
+                  </TableCell>
+                </TableRow>
+              ))}
+            </TableBody>
+          </Table>
+        </div>
+      </div>
+    </div>
+  );
+};
+
+export default SystemRiskTable;
