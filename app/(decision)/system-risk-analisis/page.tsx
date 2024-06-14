@@ -1,5 +1,6 @@
 "use client";
 
+import ResultView from "@/components/decision/system-risk/result-view";
 import SystemRiskTable from "@/components/decision/system-risk/system-risk-table";
 import RiskEvaluationView from "@/components/startup/risk/RiskEvaluationView";
 import { Button } from "@/components/ui/button";
@@ -39,7 +40,7 @@ const SystemRiskAnalisis = () => {
 
       <div className="flex flex-col gap-2">
         <div>
-          <RiskEvaluationView finalRes={result} />
+          <ResultView finalRes={result} />
         </div>
         <Button className="bg-blue-600 hover:bg-blue-500" onClick={calculate}>
           Аналіз

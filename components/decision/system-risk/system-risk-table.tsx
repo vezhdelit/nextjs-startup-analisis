@@ -48,10 +48,24 @@ const SystemRiskTable = ({ K, setK, title }: RiskInputTablesProps) => {
         <div className="border rounded-lg ">
           <Table>
             <TableBody>
+              <TableRow className=" -my-1 h-8">
+                <TableCell className=" -my-1 h-8 bg-blue-50 font-medium">
+                  Критерій
+                </TableCell>
+                <TableCell className=" -my-1 h-8 bg-blue-50 font-medium">
+                  Ступінь ризику
+                </TableCell>
+                <TableCell className=" -my-1 h-8 bg-blue-50 font-medium">
+                  Достовірність
+                </TableCell>
+                <TableCell className=" -my-1 h-8 bg-blue-50 font-medium">
+                  Вага
+                </TableCell>
+              </TableRow>
               {K.map((obj: SystemRiskCriteria, index: number) => (
                 <TableRow className=" -my-1 h-8" key={index}>
                   <TableCell className=" -my-1 h-8 bg-blue-50 font-medium">
-                    R{index+1}
+                    R{index + 1}
                   </TableCell>
                   <TableCell>
                     <Select
@@ -60,7 +74,7 @@ const SystemRiskTable = ({ K, setK, title }: RiskInputTablesProps) => {
                         handleSelectChange(value, index, K, setK)
                       }
                     >
-                      <SelectTrigger className=" -my-1 h-8 w-[70px]">
+                      <SelectTrigger className=" -my-1 h-8">
                         <SelectValue />
                       </SelectTrigger>
                       <SelectContent>
@@ -76,7 +90,7 @@ const SystemRiskTable = ({ K, setK, title }: RiskInputTablesProps) => {
                   </TableCell>
                   <TableCell>
                     <Input
-                      className=" -my-1 h-8 w-[80px]"
+                      className=" -my-1 h-8"
                       min="0"
                       max="1"
                       step="0.1"
@@ -95,7 +109,7 @@ const SystemRiskTable = ({ K, setK, title }: RiskInputTablesProps) => {
                   </TableCell>
                   <TableCell>
                     <Input
-                      className=" -my-1 h-8 w-[80px]"
+                      className=" -my-1 h-8"
                       min="0"
                       max="10"
                       step="1"

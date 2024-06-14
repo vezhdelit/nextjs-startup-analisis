@@ -9,7 +9,10 @@ export type SystemControlCriteria = {
   u?: number;
 };
 
-export const calcControl = (values: SystemControlCriteria[]) => {
+export const calcControl = (
+  values: SystemControlCriteria[],
+  rateType: string
+) => {
   values.forEach((value) => {
     if (value.lingusticValue === "T1") {
       value.a0 = 0;
@@ -64,6 +67,52 @@ export const calcControl = (values: SystemControlCriteria[]) => {
     0
   );
 
-  console.log(values);
-  console.log(averageRate);
+  let optimisticRate = values.reduce(
+    (acc, curr) => acc + curr.normalizedWeight * curr.u * curr.u,
+    0
+  );
+  optimisticRate = Math.sqrt(optimisticRate);
+
+  let pessimisticRate = values.reduce(
+    (acc, curr) => acc + curr.normalizedWeight / curr.u,
+    0
+  );
+  pessimisticRate = 1 / pessimisticRate;
+
+  const carefullRate = values.reduce(
+    (acc, curr) => acc * Math.pow(curr.u, curr.normalizedWeight),
+    1
+  );
+
+  let chosenRate = 0;
+  if (rateType === "оптимістична") {
+    chosenRate = optimisticRate;
+  } else if (rateType === "песимістична") {
+    chosenRate = pessimisticRate;
+  } else if (rateType === "середня") {
+    chosenRate = averageRate;
+  } else if (rateType === "обережна") {
+    chosenRate = carefullRate;
+  }
+
+  const R = chosenRate * (100 - 0) + 0;
+  const Uc1 = 1 - Math.pow((R - 0) / (100 - 0), 2);
+  const Uc2 = 1 - Math.pow((R - 0) / (100 - 0), 7 / 4);
+  const Uc3 = 1 - Math.pow((R - 0) / (100 - 0), 3 / 2);
+  const Uc4 = 1 - Math.pow((R - 0) / (100 - 0), 5 / 4);
+  const Uc5 = 1 - Math.pow((R - 0) / (100 - 0), 3 / 4);
+  const Uc6 = 1 - Math.pow((R - 0) / (100 - 0), 1 / 2);
+  const Uc7 = 1 - Math.pow((R - 0) / (100 - 0), 1 / 4);
+  const Uc8 = 1 - Math.pow((R - 0) / (100 - 0), 1 / 8);
+
+  return {
+    Uc1: Uc1.toFixed(3),
+    Uc2: Uc2.toFixed(3),
+    Uc3: Uc3.toFixed(3),
+    Uc4: Uc4.toFixed(3),
+    Uc5: Uc5.toFixed(3),
+    Uc6: Uc6.toFixed(3),
+    Uc7: Uc7.toFixed(3),
+    Uc8: Uc8.toFixed(3),
+  };
 };
