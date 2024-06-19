@@ -1,6 +1,6 @@
 "use client";
 
-import MyDialogV2 from "@/components/implementation-and-accompaniment/gen/MyDialogV2";
+import MyDialog from "@/components/implementation-and-accompaniment/gen/MyDialog";
 import MyLineChart from "@/components/implementation-and-accompaniment/gen/MyLineChart";
 import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
@@ -13,17 +13,18 @@ const Home = () => {
   const [isLoadingMin, setIsLoadingMin] = useState(false);
   const [isLoadingMax, setIsLoadingMax] = useState(false);
 
-  const [populationSize, setPopulationSize] = useState(200);
+  const [populationSize, setPopulationSize] = useState(100);
   const [maxGenerations, setMaxGenerations] = useState(200);
   const [pCrossover, setPCrossover] = useState(0.9);
   const [pMutations, setPMutations] = useState(0.1);
+  const [nVector, setNVector] = useState(2);
   const [limitValueTop, setLimitValueTop] = useState(100);
   const [limitValueDown, setLimitValueDown] = useState(-100);
   const [randomSeed, setRandomSeed] = useState<any>(1);
   const [isRandom, setIsRandom] = useState(false);
 
   const [fitnessFunc, setFitnessFunc] = useState(
-    "x^2 + y^2 + z^2 + 4x - 6y + 2z"
+    "f[0]**2 + 1.5 * f[1]**2 - 2 * f[0] * f[1] + 4 * f[0] - 8 * f[1]"
   );
 
   const [result, setResult] = useState({} as any);
@@ -37,6 +38,7 @@ const Home = () => {
         MAX_GENERATIONS: maxGenerations,
         P_CROSSOVER: pCrossover,
         P_MUTATION: pMutations,
+        N_VECTOR: nVector,
         LIMIT_VALUE_TOP: limitValueTop,
         LIMIT_VALUE_DOWN: limitValueDown,
         RANDOM_SEED: isRandom ? null : randomSeed, // Assuming this is a constant value you want to include
@@ -45,8 +47,8 @@ const Home = () => {
     };
 
     await fetch(
-      // "http://localhost:3000/approximation/v2/min",
-      "https://flask-genetic-algorithm.vercel.app/approximation/v2/min",
+      "http://localhost:3000/approximation/v1/min",
+      // "https://flask-genetic-algorithm.vercel.app/approximation/v1/min",
       {
         method: "POST",
         headers: {
@@ -87,15 +89,16 @@ const Home = () => {
         MAX_GENERATIONS: maxGenerations,
         P_CROSSOVER: pCrossover,
         P_MUTATION: pMutations,
+        N_VECTOR: nVector,
         LIMIT_VALUE_TOP: limitValueTop,
         LIMIT_VALUE_DOWN: limitValueDown,
-        RANDOM_SEED: isRandom ? null : randomSeed, // Assuming this is a constant value you want to include
+        RANDOM_SEED: 1, // Assuming this is a constant value you want to include
       },
       fitness_function: fitnessFunc,
     };
 
     await fetch(
-      "https://flask-genetic-algorithm.vercel.app/approximation/v2/max",
+      "https://flask-genetic-algorithm.vercel.app/approximation/max",
       {
         method: "POST",
         headers: {
@@ -131,8 +134,8 @@ const Home = () => {
   return (
     <main className="flex w-full flex-col gap-8 min-h-[80vh] items-center justify-center p-8 pb-16">
       <h2 className="flex items-center text-2xl font-bold gap-2">
-        Задача апроксимації функції на основі генетичний алгоритму V2
-        <MyDialogV2 />
+        Задача апроксимації функції на основі генетичний алгоритму
+        <MyDialog />
       </h2>
       <div className="flex w-full flex-row gap-16 justify-center">
         <div className=" flex flex-col max-w-md w-full gap-4">
@@ -160,7 +163,6 @@ const Home = () => {
               min={0}
               max={1}
               type="number"
-              step={0.1}
               value={pCrossover}
               onChange={(e) => setPCrossover(+e.target.value)}
             ></Input>
@@ -168,12 +170,18 @@ const Home = () => {
           <div className=" flex flex-col w-full gap-2">
             <Label>Шанс мутації хромосом</Label>
             <Input
-              min={0}
-              max={1}
-              type="number"
-              step={0.1}
               value={pMutations}
               onChange={(e) => setPMutations(+e.target.value)}
+            ></Input>
+          </div>
+          <div className=" flex flex-col w-full gap-2">
+            <Label>Кількість генів в однієї хромосоми</Label>
+            <Input
+              min={1}
+              type="number"
+              step={1}
+              value={nVector}
+              onChange={(e) => setNVector(+e.target.value)}
             ></Input>
           </div>
 

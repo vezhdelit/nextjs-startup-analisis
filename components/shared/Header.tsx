@@ -22,7 +22,12 @@ const Header = (props: Props) => {
         active: pathname === "/",
         links: [
           {
-            label: "Гeнетичний алгоритм",
+            label: "Гeнетичний алгоритм V1",
+            href: "/genetic-algorithm/v1",
+            active: pathname === "/genetic-algorithm/v1",
+          },
+          {
+            label: "Гeнетичний алгоритм V2",
             href: "/",
             active: pathname === "/",
           },
